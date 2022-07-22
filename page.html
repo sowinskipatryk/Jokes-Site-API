@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="pl-PL">
+	<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+	<title>API</title>
+	</head>
+	<body>
+		<div id="container">
+			<main>
+					<header>
+						<h2><div id="title">Jokes API</div></h2>
+					</header>
+					<h3><div id="data">Press the button below to display a joke.</div></h3>
+					<input type="button" id="send_request" value="Gimme a joke!">
+			</main>
+		</div>
+		<script>
+	
+		document.getElementById('send_request').addEventListener('click', getData);
+		
+		function getData()
+		{
+			fetch('https://v2.jokeapi.dev/joke/Any?safe-mode')
+				.then(response => response.json())
+				.then(response => 
+				{
+					if (response['type'] == 'twopart')
+					{
+					document.getElementById('data').innerHTML = response['setup'] + "\n" + response['delivery']
+					} 
+					else 
+					{
+					document.getElementById('data').innerHTML = response['joke']
+					}
+				})
+				.catch(err => console.error(err));
+		}
+		
+	</script>
+	</body>
+</html>
